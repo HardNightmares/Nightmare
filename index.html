@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Повстанческий Nightmare — personal profile, music, games and movies."
+    />
+    <meta property="og:title" content="Повстанческий Nightmare" />
+    <meta property="og:description" content="Gamer · Editor · Creator" />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#050609" />
+    <title>Повстанческий Nightmare</title>
+    <link rel="icon" href="assets/avatar.png" type="image/png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Pixelify+Sans:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="is-entering">
+    <!-- Экран входа (законно разблокирует звук видео и плеера по клику) -->
+    <div
+      class="entry-screen is-loading magnetic"
+      id="entryScreen"
+      role="button"
+      tabindex="0"
+      aria-label="Нажмите, чтобы открыть профиль"
+    >
+      <div class="entry-copy">
+        <span id="entryStatus">INITIALIZING PROFILE</span>
+      </div>
+    </div>
+
+    <!-- Оригинальное фоновое видео (чистый рендер без искажений + его родной звук) -->
+    <video
+      class="background-video"
+      id="backgroundVideo"
+      src="assets/background.mp4"
+      poster="assets/avatar.png"
+      muted
+      loop
+      playsinline
+      preload="auto"
+      aria-hidden="true"
+    ></video>
+
+    <!-- Деликатная виньетка по краям для читаемости текста -->
+    <div class="scene-overlay" aria-hidden="true"></div>
+
+    <!-- Управление громкостью -->
+    <div class="sound-control magnetic" id="soundControl">
+      <button
+        class="sound-toggle"
+        id="soundToggle"
+        type="button"
+        aria-label="Переключить звук"
+      >
+        <span id="soundIcon" aria-hidden="true"></span>
+      </button>
+      <label class="volume-popover" for="volumeSlider" aria-label="Громкость">
+        <input id="volumeSlider" type="range" min="0" max="100" value="80" />
+      </label>
+    </div>
+
+    <!-- Основной контейнер профиля -->
+    <main class="page-shell">
+      <section class="bio-stack" aria-label="Профиль Повстанческий Nightmare">
+        <header class="hero-copy">
+          <div class="name-glow">
+            <span class="sparkle sparkle-one" aria-hidden="true"></span>
+            <span class="sparkle sparkle-two" aria-hidden="true"></span>
+            <span class="sparkle sparkle-three" aria-hidden="true"></span>
+            <span class="sparkle sparkle-four" aria-hidden="true"></span>
+            <span class="sparkle sparkle-five" aria-hidden="true"></span>
+            <span class="sparkle sparkle-six" aria-hidden="true"></span>
+            <span class="sparkle sparkle-seven" aria-hidden="true"></span>
+            <span class="sparkle sparkle-eight" aria-hidden="true"></span>
+            <span class="sparkle sparkle-nine" aria-hidden="true"></span>
+            <span class="sparkle sparkle-ten" aria-hidden="true"></span>
+            <span class="sparkle sparkle-eleven" aria-hidden="true"></span>
+            <span class="sparkle sparkle-twelve" aria-hidden="true"></span>
+            <button
+              id="displayName"
+              class="hero-word name-copy"
+              type="button"
+              aria-label="Скопировать @hard_nightmares"
+            >
+              Повстанческий Nightmare
+            </button>
+          </div>
+
+          <p class="hero-subtitle" aria-label="Роли">
+            <span class="hero-word" id="subtitleOne">GAMER</span>
+            <span class="hero-separator" aria-hidden="true">|</span>
+            <span class="hero-word" id="subtitleTwo">EDITOR</span>
+            <span class="hero-separator" aria-hidden="true">|</span>
+            <span class="hero-word" id="subtitleThree">CREATOR</span>
+          </p>
+
+          <a
+            class="telegram-cta magnetic"
+            id="telegramCta"
+            href="https://t.me/hard_nightmares"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Telegram @hard_nightmares"
+          >
+            <svg class="location-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 2.6a7.2 7.2 0 0 0-7.2 7.2c0 5.2 6.4 11.1 6.7 11.4.3.3.7.3 1 0 .3-.3 6.7-6.2 6.7-11.4A7.2 7.2 0 0 0 12 2.6Zm0 9.8a2.7 2.7 0 1 1 0-5.4 2.7 2.7 0 0 1 0 5.4Z"
+              />
+            </svg>
+            <span id="telegramCtaLabel">Telegram</span>
+            <span class="tooltip" id="telegramCtaTooltip" role="tooltip">@hard_nightmares</span>
+          </a>
+        </header>
+
+        <!-- Карточка Discord / Профиля -->
+        <article class="profile-card">
+          <div class="avatar-wrap" id="avatarWrap" role="button" tabindex="0" aria-label="Аватар">
+            <img
+              class="avatar"
+              id="avatar"
+              src="assets/avatar.png"
+              alt="Аватар Повстанческий Nightmare"
+              width="58"
+              height="58"
+            />
+            <span class="status-dot" id="statusDot" aria-hidden="true"></span>
+          </div>
+
+          <div class="discord-copy">
+            <div class="discord-heading">
+              <button
+                id="username"
+                class="username-copy"
+                type="button"
+                aria-label="Скопировать kiskabeybi"
+              >
+                kiskabeybi
+              </button>
+              <span class="verified-pill" id="guildTag">NIGHT</span>
+              <span
+                class="developer-badge badge-tooltip"
+                id="developerBadge"
+                aria-label="Creator"
+                data-tooltip="Creator"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M12 2.2 21.2 7.5v9L12 21.8l-9.2-5.3v-9L12 2.2Zm0 3.1L5.6 9v6l6.4 3.7 6.4-3.7V9L12 5.3Z"
+                  />
+                  <path
+                    d="m10 9.1-3.1 3.1 3.1 3.1 1.3-1.3-1.8-1.8 1.8-1.8L10 9.1Zm4 0-1.3 1.3 1.8 1.8-1.8 1.8 1.3 1.3 3.1-3.1L14 9.1Z"
+                  />
+                </svg>
+              </span>
+            </div>
+
+            <span class="sr-only" id="statusText">Online</span>
+            <p id="activityText">The Last of Us · Playing</p>
+
+            <div class="activity-meta" id="activityMeta" hidden>
+              <span id="activityElapsed">ONLINE</span>
+              <span class="activity-timeline" id="activityTimeline" aria-hidden="true">
+                <i id="activityProgressFill"></i>
+              </span>
+              <span id="activityRemaining"></span>
+            </div>
+          </div>
+
+          <div class="activity-visual" id="activityVisual" hidden>
+            <img id="activityIcon" src="" alt="" width="42" height="42" />
+          </div>
+        </article>
+
+        <!-- Выдвижной блок BIO -->
+        <section class="bio-panel" aria-label="Публичное био" data-bio-drawer>
+          <button
+            class="bio-toggle"
+            id="bioToggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="bioDrawer"
+          >
+            <span>BIO</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 15.6 5.8 9.4l1.4-1.4 4.8 4.8L16.8 8l1.4 1.4L12 15.6Z" />
+            </svg>
+          </button>
+
+          <div class="bio-drawer" id="bioDrawer" hidden>
+            <div class="bio-drawer-inner">
+              <div class="bio-panel-body">
+                <dl class="bio-facts">
+                  <div>
+                    <dt>NAME</dt>
+                    <dd id="bioName">DMITRIY</dd>
+                  </div>
+                  <div>
+                    <dt>BIRTHDAY</dt>
+                    <dd id="bioBirthday">999</dd>
+                  </div>
+                  <div>
+                    <dt>PHONE</dt>
+                    <dd id="bioPhone">HIDDEN</dd>
+                  </div>
+                  <div>
+                    <dt>COUNTRY</dt>
+                    <dd id="bioCountry">RUSSIA</dd>
+                  </div>
+                  <div class="bio-fact-wide">
+                    <dt>LOCAL TIME (MSK)</dt>
+                    <dd id="moscowTime" class="centered-fact">--:--:--</dd>
+                  </div>
+                  <div class="bio-fact-wide error-fact">
+                    <dt>GIRLFRIEND</dt>
+                    <dd class="error-words" aria-label="File not found">
+                      <button type="button" data-error-word="FILE">FILE</button>
+                      <button type="button" data-error-word="NOT">NOT</button>
+                      <button type="button" data-error-word="FOUND">FOUND</button>
+                    </dd>
+                  </div>
+                </dl>
+
+                <div class="bio-selectors">
+                  <section
+                    class="bio-selector favorite-selector"
+                    data-favorite-selector
+                    aria-label="Favorites"
+                  >
+                    <span class="bio-selector-label">FAVORITE:</span>
+                    <div class="favorite-tabs" role="tablist" aria-label="Категория избранного">
+                      <button
+                        class="is-active"
+                        id="favoriteGamesTab"
+                        type="button"
+                        role="tab"
+                        data-favorite-tab="games"
+                        aria-selected="true"
+                        aria-controls="favoriteGamesPanel"
+                      >
+                        GAMES
+                      </button>
+                      <button
+                        id="favoriteMoviesTab"
+                        type="button"
+                        role="tab"
+                        data-favorite-tab="movies"
+                        aria-selected="false"
+                        aria-controls="favoriteMoviesPanel"
+                      >
+                        MOVIES
+                      </button>
+                    </div>
+
+                    <div
+                      class="favorite-panel"
+                      id="favoriteGamesPanel"
+                      role="tabpanel"
+                      aria-labelledby="favoriteGamesTab"
+                      data-favorite-panel="games"
+                    >
+                      <div
+                        class="bio-selector-window"
+                        id="gamesCarousel"
+                        data-carousel
+                        data-index="0"
+                        aria-label="Favorite games"
+                      >
+                        <button type="button" data-carousel-step="-1" aria-label="Предыдущая игра"></button>
+                        <button type="button" data-carousel-step="0" class="is-active" aria-live="polite"></button>
+                        <button type="button" data-carousel-step="1" aria-label="Следующая игра"></button>
+                      </div>
+                    </div>
+
+                    <div
+                      class="favorite-panel"
+                      id="favoriteMoviesPanel"
+                      role="tabpanel"
+                      aria-labelledby="favoriteMoviesTab"
+                      data-favorite-panel="movies"
+                      hidden
+                    >
+                      <div
+                        class="bio-selector-window"
+                        id="moviesCarousel"
+                        data-carousel
+                        data-index="0"
+                        aria-label="Favorite movies"
+                      >
+                        <button type="button" data-carousel-step="-1" aria-label="Предыдущий фильм"></button>
+                        <button type="button" data-carousel-step="0" class="is-active" aria-live="polite"></button>
+                        <button type="button" data-carousel-step="1" aria-label="Следующий фильм"></button>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section
+                    class="bio-selector"
+                    id="likesCarousel"
+                    data-carousel
+                    data-index="0"
+                    aria-label="Likes"
+                  >
+                    <span class="bio-selector-label">LIKE</span>
+                    <div class="bio-selector-window">
+                      <button type="button" data-carousel-step="-1" aria-label="Предыдущее увлечение"></button>
+                      <button type="button" data-carousel-step="0" class="is-active" aria-live="polite"></button>
+                      <button type="button" data-carousel-step="1" aria-label="Следующее увлечение"></button>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Музыкальный плеер (синхронизирован со звуком фонового видео или отдельными треками) -->
+        <section class="track-card" id="trackCard" aria-label="Музыкальный плеер">
+          <audio id="trackAudio" preload="metadata"></audio>
+
+          <div class="track-cover-wrap">
+            <img
+              class="track-cover"
+              id="trackCover"
+              src="assets/avatar.png"
+              alt="Обложка трека"
+              width="54"
+              height="54"
+            />
+            <span class="track-loader" id="trackLoader" hidden aria-hidden="true"></span>
+            <span class="track-visualizer" id="trackVisualizer" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </span>
+          </div>
+
+          <div class="track-main">
+            <div class="track-title-row">
+              <strong id="trackTitle">Yaderi</strong>
+              <span id="trackArtist">Rory in early 20s</span>
+            </div>
+
+            <div class="track-feedback" id="trackFeedback" role="status" aria-live="polite" hidden>
+              <span id="trackFeedbackText"></span>
+              <button id="trackRetry" type="button" hidden>RETRY</button>
+            </div>
+
+            <div class="track-progress-row">
+              <span id="trackCurrent">0:00</span>
+              <input
+                id="trackProgress"
+                class="track-progress"
+                type="range"
+                min="0"
+                max="1000"
+                value="0"
+                aria-label="Позиция трека"
+              />
+              <span id="trackDuration">0:00</span>
+            </div>
+          </div>
+
+          <div class="track-controls">
+            <button
+              class="track-control"
+              id="trackPrev"
+              type="button"
+              aria-label="В начало / Предыдущий трек"
+              data-tooltip="PREVIOUS"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 5h2v14H6V5Zm12.5 1.2v11.6L9.5 12l9-5.8Z" />
+              </svg>
+            </button>
+            <button
+              class="track-control track-play"
+              id="trackPlay"
+              type="button"
+              aria-label="Воспроизвести или поставить на паузу"
+              data-tooltip="PLAY / PAUSE"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path class="play-icon" d="M8 5.5v13l10-6.5-10-6.5Z" />
+                <path class="pause-icon" d="M7 5h4v14H7V5Zm6 0h4v14h-4V5Z" />
+              </svg>
+            </button>
+            <button
+              class="track-control"
+              id="trackNext"
+              type="button"
+              aria-label="Следующий трек / Перезапустить"
+              data-tooltip="NEXT"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M16 5h2v14h-2V5ZM5.5 17.8V6.2l9 5.8-9 5.8Z" />
+              </svg>
+            </button>
+          </div>
+        </section>
+
+        <!-- Социальные ссылки -->
+        <nav class="socials" id="socialsNav" aria-label="Социальные ссылки"></nav>
+
+        <!-- Счётчик просмотров + пасхалка терминала -->
+        <div class="views" id="viewsEasterEgg" role="button" tabindex="0" aria-label="Просмотры">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 5c5.6 0 9.5 5.1 9.7 5.3.4.5.4 1.1 0 1.6-.2.2-4.1 5.3-9.7 5.3s-9.5-5.1-9.7-5.3a1.3 1.3 0 0 1 0-1.6C2.5 10.1 6.4 5 12 5Zm0 2.4c-3.6 0-6.4 2.7-7.5 3.8 1.1 1.2 3.9 3.8 7.5 3.8s6.4-2.6 7.5-3.8C18.4 10.1 15.6 7.4 12 7.4Zm0 1.2a2.6 2.6 0 1 1 0 5.2 2.6 2.6 0 0 1 0-5.2Z"
+            />
+          </svg>
+          <span id="visitCount">--</span>
+        </div>
+      </section>
+    </main>
+
+    <!-- Интерактивные слои -->
+    <div class="smoke-layer" id="smokeLayer" aria-hidden="true"></div>
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+    <div class="copy-toast" id="copyToast" role="status" aria-live="polite">Copied @hard_nightmares</div>
+
+    <!-- Кнопка и панель достижений -->
+    <button
+      class="achievement-hub"
+      id="achievementToggle"
+      type="button"
+      aria-label="Достижения"
+      aria-expanded="false"
+      aria-controls="achievementPanel"
+    >
+      <span aria-hidden="true">✦</span>
+      <b id="achievementCount">0/7</b>
+    </button>
+
+    <section class="achievement-panel" id="achievementPanel" aria-label="Достижения" hidden>
+      <header>
+        <strong>ACHIEVEMENTS</strong>
+        <span id="achievementPanelCount">0 / 7</span>
+      </header>
+      <ul id="achievementList">
+        <li data-achievement="welcome"><b>WELCOME BACK</b><span>Вернуться на сайт</span></li>
+        <li data-achievement="sound"><b>TRACK HOPPER</b><span>Взаимодействовать с плеером</span></li>
+        <li data-achievement="explorer"><b>EXPLORER</b><span>Открыть BIO, включить плеер и нажать на ссылку</span></li>
+        <li data-achievement="night"><b>NIGHT OWL</b><span>Зайти на сайт ночью</span></li>
+        <li data-achievement="terminal" data-secret data-title="ROOT ACCESS" data-description="Найти скрытый терминал"><b>SECRET</b><span>???</span></li>
+        <li data-achievement="avatar" data-secret data-title="DIGITAL GHOST" data-description="Разбудить цифровой аватар"><b>SECRET</b><span>???</span></li>
+        <li data-achievement="secretphrase" data-secret-description data-description="Произнести легендарную фразу в терминале"><b>ENDURE AND SURVIVE</b><span>???</span></li>
+      </ul>
+    </section>
+
+    <!-- Секретный терминал -->
+    <section
+      class="secret-terminal"
+      id="secretTerminal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="terminalTitle"
+      hidden
+    >
+      <div class="terminal-window">
+        <header>
+          <div>
+            <span aria-hidden="true"></span>
+            <strong id="terminalTitle">NIGHTMARE // TERMINAL</strong>
+          </div>
+          <button id="terminalClose" type="button" aria-label="Закрыть терминал">×</button>
+        </header>
+        <div class="terminal-output" id="terminalOutput" role="log" aria-live="polite">
+          <p><b>system:</b> secure shell initialized</p>
+          <p><b>system:</b> type <i>help</i> to list commands</p>
+        </div>
+        <form class="terminal-form" id="terminalForm" autocomplete="off">
+          <label for="terminalInput" id="terminalPrompt">guest@nightmare:~$</label>
+          <input
+            id="terminalInput"
+            name="command"
+            type="text"
+            inputmode="text"
+            spellcheck="false"
+            maxlength="64"
+            aria-label="Команда терминала"
+          />
+        </form>
+      </div>
+    </section>
+
+    <!-- Уведомление о получении достижения -->
+    <div class="achievement-toast" id="achievementToast" role="status" aria-live="polite">
+      <span aria-hidden="true">✦</span>
+      <div>
+        <small>ACHIEVEMENT UNLOCKED</small>
+        <strong id="achievementToastTitle"></strong>
+        <span id="achievementToastDescription"></span>
+      </div>
+    </div>
+
+    <!-- Подключение модулей через defer: работает одинаково и по двойному клику (file://), и на хостинге (https://) -->
+    <script defer src="config.js"></script>
+    <script defer src="js/audio-player.js"></script>
+    <script defer src="js/bio-widgets.js"></script>
+    <script defer src="js/fx-cursor.js"></script>
+    <script defer src="js/achievements-term.js"></script>
+    <script defer src="js/app.js"></script>
+  </body>
+</html>
